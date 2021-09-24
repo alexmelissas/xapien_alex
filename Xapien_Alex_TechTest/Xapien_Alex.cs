@@ -17,7 +17,6 @@ namespace Xapien_Alex_TechTest
         private static float SimilarityLevenshtein(string s, string p)
         {
             // 1. The actual algorithm to calculate the Levenshtein Distance.
-            
             int sl = s.Length;
             int pl = p.Length;
             
@@ -42,7 +41,7 @@ namespace Xapien_Alex_TechTest
                     if (p[j - 1] == s[i - 1]) substitutionCost = 0;
                     else substitutionCost = 1;
                     
-                    // Need the minimum distance of either deletions, insertions or substitutions needed to equalize the strings
+                    // Point = the minimum of either deletions, insertions or substitutions
                     ld[i, j] = Math.Min(ld[i - 1, j] + 1,       // deletions
                         Math.Min(ld[i, j - 1] + 1,              // insertions
                             ld[i - 1, j - 1] + substitutionCost // substitutions
@@ -50,9 +49,9 @@ namespace Xapien_Alex_TechTest
                         ); 
                 }
             }
-            
-            // 2. Calculate similarity based on distance-stringlength ratio. Subtle mistakes maybe here that could be improved?
             int distance = ld[sl, pl];
+
+            // 2. Calculate similarity based on distance-stringlength ratio. Subtle mistakes maybe here that could be improved?
             float similarity = 1 - ((float) distance / pl);
             return similarity;
         }
@@ -69,7 +68,7 @@ namespace Xapien_Alex_TechTest
 
             // 2. Use Levenshtein distance and custom logic to remove similar entries for each string
             // Reversing because need reverse traversal to bez able to remove elements while stepping through the Lists. Not great for efficiency, I know...
-            // [ASSUMPTION 1]: I'm assuming that similarity of >50% is significant => entries considered to belong to same 'company' => one is eliminated. This should be fine-tuned in real world application.
+            // [ASSUMPTION 1]: I'm assuming that >=50% similarity is significant => entries considered to belong to same 'company' => one is eliminated. This should be fine-tuned in real world application.
             // [ASSUMPTION 2]: The selection of which word to eliminate isn't really specified so I'm just keeping the first one and eliminating the one(s) that comes later in the original list. Also should be refined.
             List<string> tempReverse = new List<string>(noDuplicates.Reverse<string>());
             for (int i = tempReverse.Count - 1; i >= 1; i--)
