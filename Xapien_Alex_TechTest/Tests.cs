@@ -190,5 +190,22 @@ namespace Xapien_Alex_TechTest
 
             Assert.AreEqual(expected, test);
         }
+        
+        [Test] 
+        public void l_MultipleContinuousEmptyStrings()
+        {
+            List<string> test = Logic.Cleanup(new List<string>()
+            {
+                "john", "mary", "ashley", "john", "john", "", "", "", "", "mary", "sheibel", "jnoh", "", "nhoj", "antoine", "antonie",
+                "john", "natoine", ""
+            });
+
+            List<string> expected = new List<string>()
+            {
+                "john", "mary", "ashley", "", "sheibel", "nhoj", "antoine"
+            };
+
+            Assert.AreEqual(expected, test);
+        }
     }
 }

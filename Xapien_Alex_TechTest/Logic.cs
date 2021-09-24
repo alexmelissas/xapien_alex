@@ -17,9 +17,6 @@ namespace Xapien_Alex_TechTest
             int sl = s.Length;
             int pl = p.Length;
 
-            // If one of the strings is empty, no similarity obviously.
-            if (sl == 0 || pl == 0) return 0;
-
             // Create 2-dimensional array, all elements set to 0 - C# initiates it to that by default yay!
             int[,] ld = new int[sl + 1, pl + 1];
 
