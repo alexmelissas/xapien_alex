@@ -232,12 +232,12 @@ namespace Xapien_Alex_TechTest
             List<string> test = Cleanup(new List<string>()
             {
                 "john", "mary", "ashley", "john", "john", "mary", "sheibel", "jnoh", "nhoj", "bananape", "banpanae",
-                "john", "bapeanana", "nonana"
+                "john", "bapeanana"
             });
 
             List<string> expected = new List<string>()
             {
-                "john", "mary", "ashley", "sheibel", "nhoj", "bananape", "nonana"
+                "john", "mary", "ashley", "sheibel", "nhoj", "bananape"
             };
 
             Assert.AreEqual(expected, test);
