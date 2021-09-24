@@ -8,13 +8,13 @@ using NUnit.Framework;
 namespace Xapien_Alex_TechTest
 {
 
-    // NOTE: Not great organisation in terms of OO-ness, using static functions to get things done quickly.
+    // NOTE: Not great solution in terms of OO-ness, using static functions to get things done quickly. Would be fixed in real world.
 
     public class Logic
     {
         // Helper Function - Calculate Levenshtein distances between strings using the Wagner-Fischer algorithm, and then calculate similarity with custom logic.
         // Based on pseudocode from https://en.wikipedia.org/wiki/Wagner-Fischer_algorithm.
-        public static float SimilarityLevenshtein(string s, string p)
+        private static float SimilarityLevenshtein(string s, string p)
         {
             // 1. The actual algorithm to calculate the Levenshtein Distance.
             int sl = s.Length;
@@ -67,10 +67,13 @@ namespace Xapien_Alex_TechTest
             }
 
             // 2. Use Levenshtein distance and custom logic to remove similar entries for each string
-            // Reversing because need reverse traversal to bez able to remove elements while stepping through the Lists. Not great for efficiency, I know...
-            // [ASSUMPTION 1]: I'm assuming that >=50% similarity is significant => entries considered to belong to same 'company' => one is eliminated. This should be fine-tuned in real world application.
-            // [ASSUMPTION 2]: The selection of which word to eliminate isn't really specified so I'm just keeping the first one and eliminating the one(s) that comes later in the original list. Also should be refined.
+            // Reversing because need reverse traversal to be able to remove elements while stepping through the Lists. Not great for efficiency, but will have to suffice for now
+
             List<string> tempReverse = new List<string>(noDuplicates.Reverse<string>());
+
+            // [ASSUMPTION 1]: I'm assuming that >=50% similarity is significant => entries considered to belong to same 'company' => one is eliminated. This should be fine-tuned in real world application.
+            // [ASSUMPTION 2]: The selection process of which string to eliminate isn't really specified so I'm just keeping the first one and eliminating the one(s) that come later in the original list. Also should be refined.
+
             for (int i = tempReverse.Count - 1; i >= 1; i--)
             {
                 string s = tempReverse[i];
@@ -82,8 +85,7 @@ namespace Xapien_Alex_TechTest
                     float similarity = SimilarityLevenshtein(s, p);
                     if (similarity >= 0.5 && similarity < 1)
                     {
-                        var remove = tempReverse.Single(r => r == p);
-                        tempReverse.Remove(remove);
+                        tempReverse.Remove(tempReverse.Single(t => t == p));
                         i--;
                     }
                 }
