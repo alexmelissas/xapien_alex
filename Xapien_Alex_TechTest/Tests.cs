@@ -145,13 +145,47 @@ namespace Xapien_Alex_TechTest
         {
             List<string> test = Logic.Cleanup(new List<string>()
             {
-                "john", "mary", "ashley", "john", "john", "mary", "sheibel", "jnoh", "nhoj", "bananape", "banpanae",
-                "john", "bapeanana"
+                "john", "mary", "ashley", "john", "john", "mary", "sheibel", "jnoh", "nhoj", "antoine", "antonie",
+                "john", "natoine"
             });
 
             List<string> expected = new List<string>()
             {
-                "john", "mary", "ashley", "sheibel", "nhoj", "bananape"
+                "john", "mary", "ashley", "sheibel", "nhoj", "antoine"
+            };
+
+            Assert.AreEqual(expected, test);
+        }
+
+        [Test]
+        public void j_IntertwinedEmptyString()
+        {
+            List<string> test = Logic.Cleanup(new List<string>()
+            {
+                "john", "mary", "ashley", "john", "john", "", "mary", "sheibel", "jnoh", "nhoj", "antoine", "antonie",
+                "john", "natoine"
+            });
+
+            List<string> expected = new List<string>()
+            {
+                "john", "mary", "ashley", "", "sheibel", "nhoj", "antoine"
+            };
+
+            Assert.AreEqual(expected, test);
+        }
+
+        [Test]
+        public void k_MultipleIntertwinedEmptyStrings()
+        {
+            List<string> test = Logic.Cleanup(new List<string>()
+            {
+                "john", "mary", "ashley", "john", "john", "", "mary", "sheibel", "jnoh", "", "nhoj", "antoine", "antonie",
+                "john", "natoine", ""
+            });
+
+            List<string> expected = new List<string>()
+            {
+                "john", "mary", "ashley", "", "sheibel", "nhoj", "antoine"
             };
 
             Assert.AreEqual(expected, test);
