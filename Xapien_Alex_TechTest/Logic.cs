@@ -24,7 +24,7 @@ namespace Xapien_Alex_TechTest
             for (int i = 0; i <= sl; i++) { ld[i, 0] = i; }
             for (int j = 0; j <= pl; j++) { ld[0, j] = j; }
 
-            // Build the matrix with the algorithm
+            // Build the 2D array with the algorithm
             for (int i = 1; i <= sl; i++)
             {
                 for (int j = 1; j <= pl; j++)
